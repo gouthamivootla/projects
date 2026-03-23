@@ -8,6 +8,7 @@ from dotenv import load_dotenv
 from gtts import gTTS
 import telegram
 from telegram import Bot
+from pytz import timezone as pytz_timezone
 
 load_dotenv()
 
@@ -292,13 +293,16 @@ def main():
     
     scheduler = AsyncIOScheduler()
     
+    ist = pytz_timezone('Asia/Kolkata')
+    
     scheduler.add_job(
         run_daily_briefing,
         trigger='cron',
         hour=7,
         minute=0,
+        timezone=ist,
         id='daily_news_briefing',
-        name='Daily News Briefing at 7 AM',
+        name='Daily News Briefing at 7 AM IST',
         replace_existing=True
     )
     
